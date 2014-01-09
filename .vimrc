@@ -2,6 +2,7 @@
 let mapleader = ","
 let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 0
 
 " movement in colemak
 inoremap hk <Esc>
@@ -14,10 +15,11 @@ nnoremap <C-n> :bnext<CR>
 nnoremap <C-p> :bprevious<CR>
 
 " move between split screens
-noremap <C-@> <C-W>l
 noremap <C-l> <C-W>h
 noremap <C-k> <C-W>j
 noremap <C-h> <C-W>k
+noremap <C-Space> <C-W>l
+noremap <C-@> <C-Space>
 
 " settings
 set nu
@@ -32,6 +34,7 @@ set statusline+=0x%-8B                       " character value
 set statusline+=%-14(%l,%c%V%)               " line, character
 set statusline+=%<%P                         " file position
 set ignorecase                               " ignore case when searching
+colorscheme symfony
 
 " style
 set shiftwidth=4
