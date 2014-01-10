@@ -1,6 +1,3 @@
-[submodule "bundle/ScrollColors"]
-	path = bundle/ScrollColors
-	url = https://github.com/vim-scripts/ScrollColors
 [submodule "bundle/ctrlp.vim"]
 	path = bundle/ctrlp.vim
 	url = https://github.com/kien/ctrlp.vim
