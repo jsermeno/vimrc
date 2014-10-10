@@ -4,11 +4,20 @@ let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 0
 
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|class)$'
+  \ }
+
 " movement in colemak
-inoremap hk <Esc>
-noremap k j
-noremap h k
-noremap l h
+" inoremap hk <Esc>
+" noremap k j
+" noremap h k
+" noremap l h
+imap hk <Esc>
+map k <Down>
+map h <Up>
+map l <Left>
 
 " move between buffers
 nnoremap <C-n> :bnext<CR>
@@ -34,18 +43,10 @@ set statusline+=0x%-8B                       " character value
 set statusline+=%-14(%l,%c%V%)               " line, character
 set statusline+=%<%P                         " file position
 set ignorecase                               " ignore case when searching
-colorscheme symfony
 
 " style
-set shiftwidth=4
+set shiftwidth=2
 set expandtab
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 " macvim
 set go-=T
@@ -64,3 +65,15 @@ filetype plugin indent on
 " clojure
 let g:vimclojure#HighlightBuiltins = 1
 let g:vimclojure#ParenRainbow
+
+" theme
+colorscheme inkpot
+set guifont=Source\ Code\ Pro:h12
+
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
