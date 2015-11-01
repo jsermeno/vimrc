@@ -14,10 +14,10 @@ let g:ctrlp_custom_ignore = {
 " noremap k j
 " noremap h k
 " noremap l h
-imap hk <Esc>
-map k <Down>
-map h <Up>
-map l <Left>
+" imap hk <Esc>
+" map k <Down>
+" map h <Up>
+" map l <Left>
 
 " move between buffers
 nnoremap <C-n> :bnext<CR>
@@ -31,22 +31,7 @@ noremap <C-Space> <C-W>l
 noremap <C-@> <C-Space>
 
 " settings
-set nu
-set laststatus=2
-set statusline=
-set statusline+=%-10.3n\                     " buffer number
-set statusline+=%f\                          " filename
-set statusline+=%h%m%r%w                     " status flags
-set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
-set statusline+=%=                           " right align remainder
-set statusline+=0x%-8B                       " character value
-set statusline+=%-14(%l,%c%V%)               " line, character
-set statusline+=%<%P                         " file position
 set ignorecase                               " ignore case when searching
-
-" style
-set shiftwidth=2
-set expandtab
 
 " macvim
 set go-=T
@@ -66,9 +51,45 @@ filetype plugin indent on
 let g:vimclojure#HighlightBuiltins = 1
 let g:vimclojure#ParenRainbow
 
+set nu
+set laststatus=2
+set statusline=
+set statusline+=%-10.3n\                     " buffer number
+set statusline+=%f\                          " filename
+set statusline+=%h%m%r%w                     " status flags
+set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
+set statusline+=%=                           " right align remainder
+set statusline+=0x%-8B                       " character value
+set statusline+=%-14(%l,%c%V%)               " line, character
+set statusline+=%<%P                         " file position
+
+" haskell
+let g:haskell_indent_if = 3
+" Reload
+" map <silent> tu :call GHC_BrowseAll()<CR>
+" Type Lookup
+map <silent> <Leader>w :GhcModType<CR>
+map <silent> <Leader>q :GhcModTypeClear<CR>
+
+" style
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set shiftround
+set expandtab
+set ai
+set incsearch " defaults for vim-simple
+set hlsearch  " defaults for vim-simple
+
 " theme
-colorscheme inkpot
-set guifont=Source\ Code\ Pro:h12
+colorscheme doriath
+" set guifont=Source\ Code\ Pro:h14
+
+fun! TrimWhitespace()
+    let l:save_cursor = getpos('.')
+    %s/\s\+$//e
+    call setpos('.', l:save_cursor)
+endfun
 
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -76,4 +97,4 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre * :call TrimWhitespace()
