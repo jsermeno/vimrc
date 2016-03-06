@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/jsermeno/Workspace/myapp/src'
-let g:netrw_dirhist_2='/Users/jsermeno/Workspace/even/src'
-let g:netrw_dirhist_3='/Users/jsermeno/.vim/bundle/ScrollColors'

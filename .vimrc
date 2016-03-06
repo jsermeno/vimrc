@@ -1,23 +1,14 @@
 " ctrl p
+
 let mapleader = ","
 let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 0
 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|class)$'
+  \ 'dir':  'node_modules$\|git$\|hg$\|svn$\|local$',
+  \ 'file': 'exe\|so\|dll\|class'
   \ }
-
-" movement in colemak
-" inoremap hk <Esc>
-" noremap k j
-" noremap h k
-" noremap l h
-" imap hk <Esc>
-" map k <Down>
-" map h <Up>
-" map l <Left>
 
 " move between buffers
 nnoremap <C-n> :bnext<CR>
@@ -30,11 +21,35 @@ noremap <C-h> <C-W>k
 noremap <C-Space> <C-W>l
 noremap <C-@> <C-Space>
 
-" settings
-set ignorecase                               " ignore case when searching
-
 " macvim
 set go-=T
+
+" style
+set ignorecase                               " ignore case when searching
+set nocompatible
+set number
+" set nowrap
+set showmode
+set tw=80
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set shiftround
+set expandtab
+set smarttab
+set smartindent
+set smartcase
+" set ai
+set incsearch " defaults for vim-simple
+set hlsearch  " defaults for vim-simple
+" set clipboard=unnamedplus,autoselect
+" set completeopt=menuone,menu,longest
+" set wildignore+=*\\tmp\\*,*.swp,*.swo,*.zip,.git,.cabal-sandbox
+" set wildmode=longest,list,full
+" set wildmenu
+" set completeopt+=longest
+" set t_Co=256
+set cmdheight=1
 
 " pathogen
 execute pathogen#infect()
@@ -56,33 +71,63 @@ set laststatus=2
 set statusline=
 set statusline+=%-10.3n\                     " buffer number
 set statusline+=%f\                          " filename
-set statusline+=%h%m%r%w                     " status flags
-set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
-set statusline+=%=                           " right align remainder
-set statusline+=0x%-8B                       " character value
-set statusline+=%-14(%l,%c%V%)               " line, character
-set statusline+=%<%P                         " file position
-
+" set statusline+=%h%m%r%w                     " status flags
+" set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
+" set statusline+=%=                           " right align remainder
+" set statusline+=0x%-8B                       " character value
+" set statusline+=%-14(%l,%c%V%)               " line, character
+" set statusline+=%<%P                         " file position
+"
 " haskell
-let g:haskell_indent_if = 3
+" let g:haskell_indent_if = 3
 " Reload
 " map <silent> tu :call GHC_BrowseAll()<CR>
-" Type Lookup
-map <silent> <Leader>w :GhcModType<CR>
-map <silent> <Leader>q :GhcModTypeClear<CR>
+" syntastic
+map <Leader>s :SyntasticToggleMode<CR>
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-" style
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
-set shiftround
-set expandtab
-set ai
-set incsearch " defaults for vim-simple
-set hlsearch  " defaults for vim-simple
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_disabled_filetypes=['html']
+
+" ghc-mod
+
+map <silent> tw :GhcModTypeInsert<CR>
+map <silent> ts :GhcModSplitFunCase<CR>
+map <silent> tq :GhcModType<CR>
+map <silent> te :GhcModTypeClear<CR>
+
+" auto-completion
+let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
+
+if has("gui_running")
+  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+else " no gui
+  if has("unix")
+    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  endif
+endif
+
+let g:haskellmode_completion_ghc = 1
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+" nerd tree
+map <Leader>n :NERDTreeToggle<CR>
+
+" tabular
+let g:haskell_tabular = 1
+nmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a; :Tabularize /::<CR>
+nmap <Leader>a- :Tabularize /-><CR>
 
 " theme
-colorscheme doriath
+let g:solarized_termcolors=16
+set background=dark
+colorscheme solarized
 " set guifont=Source\ Code\ Pro:h14
 
 fun! TrimWhitespace()
@@ -97,4 +142,4 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-autocmd BufWritePre * :call TrimWhitespace()
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
