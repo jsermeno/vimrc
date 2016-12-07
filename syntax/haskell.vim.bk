@@ -39,9 +39,8 @@
 " hs_allow_hash_operator - Don't highlight seemingly incorrect C
 "			   preprocessor directives but assume them to be
 "			   operators
-" hs_highlight_list_special
-"
-"
+" 
+" 
 
 if version < 600
   syn clear
@@ -51,8 +50,6 @@ endif
 
 "syntax sync fromstart "mmhhhh.... is this really ok to do so?
 syntax sync linebreaks=15 minlines=50 maxlines=500
-
-setlocal iskeyword=@,48-57,_,#,'
 
 syn match  hsSpecialChar	contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
 syn match  hsSpecialChar	contained "\\\(NUL\|SOH\|STX\|ETX\|EOT\|ENQ\|ACK\|BEL\|BS\|HT\|LF\|VT\|FF\|CR\|SO\|SI\|DLE\|DC1\|DC2\|DC3\|DC4\|NAK\|SYN\|ETB\|CAN\|EM\|SUB\|ESC\|FS\|GS\|RS\|US\|SP\|DEL\)"
@@ -68,7 +65,7 @@ syn match VarId "\(\<[A-Z][a-zA-Z0-9_']*\.\)\=\<[a-z][a-zA-Z0-9_']*\>"
 " Infix operators--most punctuation characters and any (qualified) identifier
 " enclosed in `backquotes`. An operator starting with : is a constructor,
 " others are variables (e.g. functions).
-syn match hsVarSym "\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[-!#$%&\*\+/<=>\?@\\^|~.→←⇒][-!#$%&\*\+/<=>\?@\\^|~:.]*"
+syn match hsVarSym "\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[-!#$%&\*\+/<=>\?@\\^|~.][-!#$%&\*\+/<=>\?@\\^|~:.]*"
 syn match hsConSym "\(\<[A-Z][a-zA-Z0-9_']*\.\)\=:[-!#$%&\*\+./<=>\?@\\^|~:]*"
 syn match hsVarSym "`\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[a-z][a-zA-Z0-9_']*`"
 syn match hsConSym "`\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[A-Z][a-zA-Z0-9_']*`"
@@ -99,13 +96,9 @@ sy match hs_OpFunctionName        "(\(\W\&[^(),\"]\)\+)" contained
 sy region hs_Function start="^["'a-zA-Z_([{]\(\(.\&[^=]\)\|\(\n\s\)\)*=" end="\(\s\|\n\|\w\|[([]\)" 
         \ contains=hs_OpFunctionName,hs_InfixOpFunctionName,hs_InfixFunctionName,hs_FunctionName,hsType,hsConSym,hsVarSym,hsString,hsCharacter
 
-sy match hs_TypeOp "::"
-sy match hs_TypeOp "∷"
-sy match hs_DeclareFunction "^[a-z_(]\S*\(\s\|\n\)*\(∷\|::\)" contains=hs_FunctionName,hs_OpFunctionName,hs_TypeOp
+sy match hs_DeclareFunction "^[a-z_(]\S*\(\s\|\n\)*::" contains=hs_FunctionName,hs_OpFunctionName
 
-" hi hs_TypeOp guibg=red
-
-" hi hs_InfixOpFunctionName guibg=yellow
+" hi hs_InfixOpFunctionName guibg=bg
 " hi hs_Function guibg=green
 " hi hs_InfixFunctionName guibg=red
 " hi hs_DeclareFunction guibg=red
@@ -117,18 +110,16 @@ sy keyword hsInfix infix infixl infixr
 sy keyword hsStatement  do case of let in
 sy keyword hsConditional if then else
 
-" Primitive types from the standard prelude and libraries.
-sy match hsType "\<[A-Z]\(\S\&[^,.]\)*\>"
-if exists("hs_highlight_list_special")
-    sy match hsSpecial "()\|\[\]"
-endif
+"if exists("hs_highlight_types")
+  " Primitive types from the standard prelude and libraries.
+  sy match hsType "\<[A-Z]\(\S\&[^,.]\)*\>"
+  sy match hsType "()"
+"endif
 
 " Not real keywords, but close.
 if exists("hs_highlight_boolean")
   " Boolean constants from the standard prelude.
   syn keyword hsBoolean True False
-  " Other constants, also from the prelude.
-  syn keyword hsConstant LT GT EQ Nothing Just Left Right
 endif
 
 syn region	hsPackageString	start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=cSpecial contained
@@ -213,7 +204,7 @@ sy keyword hsFFIImportExport export contained
 sy keyword hsFFICallConvention ccall stdcall contained
 sy keyword hsFFISafety safe unsafe contained
 sy region  hsFFIString		start=+"+  skip=+\\\\\|\\"+  end=+"+  contained contains=hsSpecialChar
-sy match hsFFI excludenl "\<foreign\>\(.\&[^\"]\)*\"\(.\)*\"\(\s\|\n\)*\(.\)*\(∷\|::\)"
+sy match hsFFI excludenl "\<foreign\>\(.\&[^\"]\)*\"\(.\)*\"\(\s\|\n\)*\(.\)*::"
   \ keepend
   \ contains=hsFFIForeign,hsFFIImportExport,hsFFICallConvention,hsFFISafety,hsFFIString,hs_OpFunctionName,hs_hlFunctionName
 
@@ -234,9 +225,6 @@ sy match hsQQContent ".*" contained
 sy match hsQQEnd "|\]" contained
 sy match hsQQVarID "\[\$\(.\&[^|]\)*|" contained
 sy match hsQQVarIDNew "\[\(.\&[^|]\)*|" contained
-
-" TH quotations
-sy region hsQuotation matchgroup=hsQuotationBrackets start="\[[edtp]\?|" end="|\]" contains=TOP transparent fold
 
 if exists("hs_highlight_debug")
   " Debugging functions from the standard prelude.
@@ -324,8 +312,6 @@ if version >= 508 || !exists("did_hs_syntax_inits")
   HiLink hsCommentTodo      Todo
   HiLink hsPragma           SpecialComment
   HiLink hsBoolean			  Boolean
-  HiLink hsSpecial          Special
-  HiLink hsConstant         Constant
 
   if exists("hs_highlight_types")
       HiLink hsDelimTypeExport  hsType
@@ -333,8 +319,6 @@ if version >= 508 || !exists("did_hs_syntax_inits")
   endif
 
   HiLink hsDebug            Debug
-
-  HiLink hs_TypeOp          hsOperator
 
   HiLink cCppString         hsString
   HiLink cCommentStart      hsComment
@@ -364,10 +348,7 @@ if version >= 508 || !exists("did_hs_syntax_inits")
   HiLink hsQQEnd   Keyword
   HiLink hsQQContent String
 
-  HiLink hsQuotationBrackets   PreCondit
-
   delcommand HiLink
 endif
 
 let b:current_syntax = "haskell"
-
