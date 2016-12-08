@@ -1,0 +1,4 @@
+:set prompt "\ESC[32mλ\ESC[0m> "
+:set prompt2 "\ESC[32mλ\ESC[0m| "
+:set -fobject-code
+:set -fno-warn-type-defaults
