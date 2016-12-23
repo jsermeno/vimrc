@@ -29,6 +29,7 @@ set ignorecase                               " ignore case when searching
 set nocompatible
 set number
 " set nowrap
+set textwidth=0 wrapmargin=0
 set showmode
 set tw=80
 set shiftwidth=2
@@ -62,10 +63,6 @@ filetype plugin indent on
 " vim-colorschemes      https://github.com/flazz/vim-colorschemes
 " VimClojure            https://github.com/vim-scripts/VimClojure
 
-" clojure
-let g:vimclojure#HighlightBuiltins = 1
-let g:vimclojure#ParenRainbow
-
 set nu
 set laststatus=2
 set statusline=
@@ -83,9 +80,9 @@ set statusline+=%f\                          " filename
 " Reload
 " map <silent> tu :call GHC_BrowseAll()<CR>
 " syntastic
-map <Leader>s :SyntasticToggleMode<CR>
+" map <Leader>s :SyntasticToggleMode<CR>
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
