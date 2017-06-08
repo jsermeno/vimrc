@@ -1,3 +1,5 @@
+" use https://github.com/powerline/fonts
+" mbadolato-iTerm2-Color-Schemes
 " ctrl p
 
 let mapleader = ","
@@ -7,7 +9,7 @@ let g:ctrlp_working_path_mode = 0
 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  'node_modules$\|git$\|hg$\|svn$\|local$',
-  \ 'file': 'exe\|so\|dll\|class'
+  \ 'file': '^exe\|^so\|^dll\|^class'
   \ }
 
 " move between buffers
@@ -28,15 +30,8 @@ set go-=T
 set ignorecase                               " ignore case when searching
 set nocompatible
 set number
-" set nowrap
-set textwidth=0 wrapmargin=0
 set showmode
-set tw=80
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
 set shiftround
-set expandtab
 set smarttab
 set smartindent
 set smartcase
@@ -74,6 +69,7 @@ set statusline+=%f\                          " filename
 " set statusline+=0x%-8B                       " character value
 " set statusline+=%-14(%l,%c%V%)               " line, character
 " set statusline+=%<%P                         " file position
+" set wrap
 "
 " haskell
 " let g:haskell_indent_if = 3
@@ -121,10 +117,19 @@ nmap <Leader>a= :Tabularize /=<CR>
 nmap <Leader>a; :Tabularize /::<CR>
 nmap <Leader>a- :Tabularize /-><CR>
 
+" wrapping
+set textwidth=0
+set wrapmargin=0
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
+
 " theme
 let g:solarized_termcolors=16
 set background=dark
 colorscheme solarized
+set indentexpr= " Causes poor indentation behavior in YAML files
 " set guifont=Source\ Code\ Pro:h14
 
 fun! TrimWhitespace()
