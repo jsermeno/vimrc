@@ -5,7 +5,13 @@ Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-sensible'
 Plug 'flazz/vim-colorschemes'
 Plug 'kien/ctrlp.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-colorscheme-switcher'
+Plug 'Taverius/vim-colorscheme-manager'
 call plug#end()
+
+runtime! plugin/colorscheme-manager.vim
+runtime! plugin/sensible.vim
 
 " ctrlp
 let mapleader = ","
@@ -18,7 +24,9 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '^exe\|^so\|^dll\|^class'
   \ }
 
-runtime! plugin/sensible.vim
+" mappings for vim-colorscheme-switcher
+map <F9> :PrevColorScheme<CR>
+let g:colorschemeManagerLast = 1
 
 " style
 set ignorecase          " ignore case when searching
@@ -56,7 +64,7 @@ let g:vim_markdown_folding_style_pythonic = 1
 
 " theme
 set background=dark
-colorscheme symfony
+colorscheme synic
 
 " strip trailing whitespace
 fun! <SID>StripTrailingWhitespaces()
