@@ -10,8 +10,13 @@ Plug 'xolox/vim-colorscheme-switcher'
 Plug 'Taverius/vim-colorscheme-manager'
 call plug#end()
 
+runtime! plugin/neoformat.vim
 runtime! plugin/colorscheme-manager.vim
 runtime! plugin/sensible.vim
+
+" Needs to be run after plugins
+syntax on
+filetype plugin indent off
 
 " ctrlp
 let mapleader = ","
@@ -36,11 +41,11 @@ set number
 set showmode
 set shiftround
 set smarttab
-set autoindent
 set smartindent
 set incsearch
 set hlsearch
 set indentexpr= " Causes poor indentation behavior in YAML files
+set autoindent
 set cmdheight=1
 
 " wrapping
