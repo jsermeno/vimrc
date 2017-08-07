@@ -1,6 +1,7 @@
 " vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'sbdchd/neoformat'
+Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-sensible'
 Plug 'flazz/vim-colorschemes'
@@ -16,7 +17,9 @@ runtime! plugin/sensible.vim
 
 " Needs to be run after plugins
 syntax on
-filetype plugin indent off
+filetype on
+filetype plugin on
+filetype indent on
 
 " ctrlp
 let mapleader = ","
